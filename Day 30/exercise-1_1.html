@@ -1,0 +1,473 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>World Countries Data</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .header h4 {
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 40%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .name-button button {
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: rgb(246, 156, 29);
+            transition: background-color 0.3s ease;
+        }
+
+        .name-button button:hover {
+            background-color: rgb(255, 186, 89);
+        }
+
+        .countries-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .country-card {
+            width: 200px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .country-card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .country-card h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .country-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .country-card p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .country-card ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .model-box-btn:hover {
+            background-color: #0069d9;
+        }
+
+        .model-box {
+            display: none;
+            position: fixed;
+            height: 75%;
+            width: 75%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            z-index: 9999;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow-y: auto;
+        }
+
+        .model-box h3 {
+            margin-top: 0;
+            font-size: 24px;
+            text-align: center;
+            color: #007bff;
+        }
+
+        .model-box button {
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+            margin-left: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .model-box button:hover {
+            background-color: #0069d9;
+        }
+
+        .graph-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+
+        .graph-buttons {
+            display: flex;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        .graph-buttons button {
+            border: none;
+            background-color: #0074d9;
+            color: #fff;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-out;
+        }
+
+        .graph-buttons button:hover {
+            background-color: #0062a1;
+        }
+
+        .graph-bar {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            transition: width 0.3s ease-out;
+            border: 2px solid #0074d9;
+            background-color: #0074d9;
+            height: 25px;
+        }
+
+        .graph-bar:hover {
+            opacity: 0.8;
+        }
+
+        .graph-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+            text-align: right;
+            width: 130px;
+        }
+
+        .graph-number {
+            font-size: 0.8rem;
+            text-align: center;
+            width: 40px;
+        }
+
+        .graph-data {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .graph-data div {
+            margin-bottom: 0.5rem;
+        }
+
+        .graph-data p {
+            margin: 0;
+        }
+
+        .graph-data .population {
+            font-weight: bold;
+        }
+
+        .graph-data .languages {
+            font-style: italic;
+        }
+
+        .graph-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="header">
+            <h1>World Countries Data</h1>
+            <h4>Currently we have <span id="total-country"></span> countries</h4>
+            <p id="start-with-text"></p>
+            <div class="search-container">
+                <input class="search-input" type="text" placeholder="Search countries by name, city and languages..." />
+            </div>
+            <div class="name-button">
+                <button type="button" id="sort-name" value="Sort Name">Name</button>
+                <button type="button" id="sort-capital" value="Sort Capital">Capital</button>
+                <button type="button" id="sort-population" value="Sort Population">Population</button>
+                <button id="model-box-btn" class="fa fa-bar-chart"></button>
+                <div class="model-box">
+                    <h4 class="graph-title"></h4>
+                    <div class="graph-buttons">
+                        <button id="languages">Languages</button>
+                        <button id="population">Population</button>
+                        <button id="model-box-closeBtn" class="fa fa-bar-chart"></button>
+                    </div>
+                    <div class="graph-wrapper">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="countries-list"></div>
+    </div>
+
+    <script defer>
+        // Define the API URL
+        const apiUrl = "https://restcountries.com/v3.1/all";
+
+        // Define a model box
+        const modelBoxBtn = document.querySelector('#model-box-btn');
+        const modelBoxCloseBtn = document.querySelector('#model-box-closeBtn');
+        const modelBox = document.querySelector('.model-box');
+        const populationBtn = document.querySelector("#population");
+        const languagesBtn = document.querySelector("#languages");
+        const graphWrapper = document.querySelector(".graph-wrapper");
+        const searchInput = document.querySelector('.search-input');
+        const countriesList = document.querySelector('.countries-list');
+
+        modelBoxBtn.addEventListener('click', () => {
+            modelBox.style.display = 'block';
+        });
+
+        modelBoxCloseBtn.addEventListener('click', () => {
+            modelBox.style.display = 'none';
+        });
+
+        modelBox.addEventListener('click', (event) => {
+            if (event.target === modelBox) {
+                modelBox.style.display = 'none';
+            }
+        });
+
+        // Fetch the data from the API and convert it to JSON format
+        fetch(apiUrl)
+            .then((response) => response.json())
+            .then((data) => {
+                // Count the number of countries in the returned data and update the span element with the total count
+                const totalCountry = data.length;
+                document.getElementById("total-country").innerHTML = totalCountry;
+
+                // Loop through the countries data and create a country box for each country
+                const countryBox = document.querySelector(".countries-list");
+                let countries = data;
+                function renderCountries(countries) {
+                    countryBox.innerHTML = "";
+                    countries.forEach((country) => {
+                        const countryCard = document.createElement("div");
+                        countryCard.classList.add("country-card");
+
+                        const flag = document.createElement("img");
+                        flag.setAttribute("src", country.flags.svg);
+                        flag.setAttribute("alt", `${country.name.common}'s flag`);
+                        countryCard.appendChild(flag);
+                        countryBox.appendChild(countryCard);
+
+                        const countryName = document.createElement("h2");
+                        countryName.innerHTML = country.name.common;
+                        countryCard.appendChild(countryName);
+
+                        const countryDetails = document.createElement("ul");
+                        const capital = document.createElement("li");
+                        capital.innerHTML = `<strong>Capital:</strong> ${country.capital}`;
+                        countryDetails.appendChild(capital);
+
+                        const population = document.createElement("li");
+                        population.innerHTML = `<strong>Population:</strong> ${country.population}`;
+                        countryDetails.appendChild(population);
+
+                        const languageTitle = document.createElement("li");
+                        languageTitle.innerHTML = `<strong>Languages:</strong>`;
+                        countryDetails.appendChild(languageTitle);
+                        countryCard.appendChild(countryDetails);
+
+                        const languages = document.createElement("ul");
+                        for (const language in country.languages) {
+                            const languageItem = document.createElement("li");
+                            languageItem.innerHTML = country.languages[language];
+                            languages.appendChild(languageItem);
+                        }
+                        countryDetails.appendChild(languages);
+
+                    });
+                }
+
+                let sortAsc = true;
+                document.getElementById("sort-name").addEventListener("click", () => {
+                    countries = [...countries].sort((a, b) => {
+                        const nameA = a.name.common.toLowerCase();
+                        const nameB = b.name.common.toLowerCase();
+                        if (nameA < nameB) return sortAsc ? -1 : 1;
+                        if (nameA > nameB) return sortAsc ? 1 : -1;
+                        return 0;
+                    });
+                    sortAsc = !sortAsc;
+                    renderCountries(countries);
+                });
+
+
+                document.getElementById("sort-capital").addEventListener("click", () => {
+                    countries = [...countries].sort((a, b) => {
+                        if (a.capital < b.capital) return sortAsc ? -1 : 1;
+                        if (a.capital > b.capital) return sortAsc ? 1 : -1;
+                        return 0;
+                    });
+                    sortAsc = !sortAsc;
+                    renderCountries(countries);
+                });
+
+
+                let currentSortOrder = "desc";
+                const sortPopulationBtn = document.getElementById("sort-population");
+                sortPopulationBtn.addEventListener("click", () => {
+                    currentSortOrder = currentSortOrder === "desc" ? "asc" : "desc";
+                    if (currentSortOrder === "desc") {
+                        countries.sort((a, b) => b.population - a.population);
+                    } else {
+                        countries.sort((a, b) => a.population - b.population);
+                    }
+                    renderCountries(countries);
+                });
+
+                searchInput.addEventListener("input", () => {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    const filteredCountries = countries.filter(country =>
+                        country.name.common.toLowerCase().includes(searchTerm)
+                    );
+                    renderCountries(filteredCountries);
+                });
+
+                // Graph View
+                function renderChart(type) {
+                    let sortedData;
+                    let label;
+                    if (type === "population") {
+                        sortedData = countries.slice().sort((a, b) => b.population - a.population).slice(0, 10);
+                        label = "Population (in millions)";
+                    } else if (type === "languages") {
+                        const languageCounts = {};
+                        countries.forEach((country) => {
+                            if (Array.isArray(country.languages)) {
+                                country.languages.forEach((language) => {
+                                    if (language.name in languageCounts) {
+                                        languageCounts[language.name]++;
+                                    } else {
+                                        languageCounts[language.name] = 1;
+                                    }
+                                });
+                            }
+                        });
+                        sortedData = Object.entries(languageCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+                        label = "Most Common Languages";
+                    } else {
+                        console.error("Invalid type!");
+                        return;
+                    }
+
+                    graphWrapper.innerHTML = "";
+                    sortedData.forEach(item => {
+                        const value = type === "population" ? item.population : item[1];
+                        const bar = document.createElement("div");
+                        bar.classList.add("graph-bar");
+                        bar.style.width = value / 10000000 + "px";
+                        const labelEl = document.createElement("div");
+                        labelEl.classList.add("graph-label");
+                        labelEl.textContent = type === "population" ? item.name.common : item[0];
+                        const numberEl = document.createElement("div");
+                        numberEl.classList.add("graph-number");
+                        numberEl.textContent = type === "population" ? `\xa0${item.population.toLocaleString()}` : item[1];
+                        const wrapper = document.createElement("div");
+                        wrapper.classList.add("graph-data");
+                        wrapper.appendChild(labelEl);
+                        wrapper.appendChild(bar);
+                        wrapper.appendChild(numberEl);
+                        graphWrapper.appendChild(wrapper);
+                    });
+                    const graphTitle = document.querySelector(".graph-title");
+                    graphTitle.textContent = label;
+                }
+
+                renderChart("population")
+
+                populationBtn.addEventListener("click", () => {
+                    renderChart("population");
+                });
+
+                languagesBtn.addEventListener("click", () => {
+                    renderChart("languages");
+                });
+
+                renderCountries(countries);
+            })
+            .catch((error) => {
+                console.error("Error fetching data: ", error);
+            });
+
+    </script>
+</body>
+
+</html>

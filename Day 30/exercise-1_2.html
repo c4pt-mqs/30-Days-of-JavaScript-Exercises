@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Validating Web Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        form>label {
+            display: flex;
+            font-weight: lighter;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            width: 35%;
+        }
+
+        input[type="submit"] {
+            background-color: #444;
+            color: white;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #000;
+        }
+
+        input.valid {
+            border: 2px solid green;
+        }
+
+        .error {
+            display: none;
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="get">
+        <h1>Validating Web Forms</h1>
+        <label for="name">First Name</label>
+        <input type="text" name="name" required pattern="[a-zA-Z0-9]{3,16}">
+        <div class="error">First name must be alphanumeric and contain 3 - 16 characters.</div>
+        <label for="lastname">Last Name</label>
+        <input type="text" name="lastname" required pattern="[a-zA-Z0-9]{3,16}">
+        <div class="error">Last name must be alphanumeric and contain 3 - 16 characters.</div>
+        <label for="email">Email</label>
+        <input type="email" name="email" required>
+        <div class="error">Email must be a valid address, e.g. example@example.com.</div>
+        <label for="password">Password</label>
+        <input type="password" name="password" required pattern="[a-zA-Z0-9@_-]{6,20}">
+        <div class="error">Password must be alphanumeric (@, _ and - are also allowed) and between 6 - 20 characters.
+        </div>
+        <label for="number">Telephone</label>
+        <input type="tel" name="number" required pattern="\d{3}-\d{3}-\d{4}">
+        <div class="error">A valid telephone number is required (e.g. 123-456-7890).</div>
+        <label for="bio">Your Bio</label>
+        <input type="text" name="bio" required pattern="[a-z_-]{8,50}">
+        <div class="error">Bio must contain only lowercase letters, underscores, hyphens and be 8 - 50 characters.</div>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        const form = document.querySelector('form');
+        const firstNameInput = document.querySelector('input[name="name"]');
+        const lastNameInput = document.querySelector('input[name="lastname"]');
+        const emailInput = document.querySelector('input[name="email"]');
+        const passwordInput = document.querySelector('input[name="password"]');
+        const telephoneInput = document.querySelector('input[name="number"]');
+        const bioInput = document.querySelector('input[name="bio"]');
+
+        // Define the error messages
+        const firstNameError = document.querySelector('input[name="name"] + .error');
+        const lastNameError = document.querySelector('input[name="lastname"] + .error');
+        const emailError = document.querySelector('input[name="email"] + .error');
+        const passwordError = document.querySelector('input[name="password"] + .error');
+        const telephoneError = document.querySelector('input[name="number"] + .error');
+        const bioError = document.querySelector('input[name="bio"] + .error');
+
+        // Define the regular expressions
+        const nameRegex = /^[a-zA-Z0-9]{3,16}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^[a-zA-Z0-9@_-]{6,20}$/;
+        const telephoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+        const bioRegex = /^[a-z_-]{8,50}$/;
+
+        // Define the validation functions
+        function validateName() {
+            if (!nameRegex.test(firstNameInput.value)) {
+                firstNameInput.classList.remove('valid');
+                firstNameError.style.display = 'block';
+                if (firstNameInput.selectionStart === firstNameInput.selectionEnd) {
+                    firstNameInput.focus();
+                }
+            } else {
+                firstNameInput.classList.add('valid');
+                firstNameError.style.display = 'none';
+            }
+        }
+
+        function validateLastName() {
+            if (!nameRegex.test(lastNameInput.value)) {
+                firstNameInput.classList.remove('valid');
+                lastNameError.style.display = 'block';
+                if (lastNameInput.selectionStart === lastNameInput.selectionEnd) {
+                    lastNameInput.focus();
+                }
+            } else {
+                lastNameInput.classList.add('valid');
+                lastNameError.style.display = 'none';
+            }
+        }
+
+        function validateEmail() {
+            if (!emailRegex.test(emailInput.value)) {
+                emailInput.classList.remove('valid');
+                emailError.style.display = 'block';
+                if (emailInput.selectionStart === emailInput.value.length) {
+                    emailInput.scrollIntoView({ behavior: 'smooth' });
+                }
+                emailInput.focus();
+            } else {
+                emailInput.classList.add('valid');
+                emailError.style.display = 'none';
+            }
+        }
+
+        function validatePassword() {
+            if (!passwordRegex.test(passwordInput.value)) {
+                passwordInput.classList.remove('valid');
+                passwordError.style.display = 'block';
+                if (passwordInput.selectionStart === passwordInput.value.length) {
+                    passwordInput.scrollIntoView({ behavior: 'smooth' });
+                }
+                passwordInput.focus();
+            } else {
+                passwordInput.classList.add('valid');
+                passwordError.style.display = 'none';
+            }
+        }
+
+        function validateTelephone() {
+            if (!telephoneRegex.test(telephoneInput.value)) {
+                telephoneInput.classList.remove('valid');
+                telephoneError.style.display = 'block';
+                if (telephoneInput.selectionStart === telephoneInput.value.length) {
+                    telephoneInput.scrollIntoView({ behavior: 'smooth' });
+                }
+                telephoneInput.focus();
+            } else {
+                telephoneInput.classList.add('valid');
+                telephoneError.style.display = 'none';
+            }
+        }
+
+        function validateBio() {
+            if (!bioRegex.test(bioInput.value)) {
+                bioInput.classList.remove('valid');
+                bioError.style.display = 'block';
+                if (bioInput.selectionStart === bioInput.value.length) {
+                    bioInput.scrollIntoView({ behavior: 'smooth' });
+                }
+                bioInput.focus();
+            } else {
+                bioInput.classList.add('valid');
+                bioError.style.display = 'none';
+            }
+        }
+
+        // Attach the event listeners to the inputs
+        firstNameInput.addEventListener('input', validateName);
+        lastNameInput.addEventListener('input', validateLastName);
+        emailInput.addEventListener('input', validateEmail);
+        passwordInput.addEventListener('input', validatePassword);
+        telephoneInput.addEventListener('input', validateTelephone);
+        bioInput.addEventListener('input', validateBio);
+
+        // Prevent the form from submitting if there are any errors
+        form.addEventListener('submit', (event) => {
+            if (!nameRegex.test(firstNameInput.value) || !nameRegex.test(lastNameInput.value) ||
+                !emailRegex.test(emailInput.value) || !passwordRegex.test(passwordInput.value) ||
+                !telephoneRegex.test(telephoneInput.value) || !bioRegex.test(bioInput.value)) {
+                event.preventDefault();
+            }
+        });
+
+    </script>
+</body>
+
+</html>
