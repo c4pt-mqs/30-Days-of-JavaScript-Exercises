@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JavaScript for Everyone:DOM</title>
+    <style>
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        min-width: 500px;
+      }
+      .language {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .status {
+        flex: 1;
+      }
+      .details {
+        display: none;
+      }
+      /* centering the summary element */
+      summary {
+        text-align: center;
+      }
+
+      /* centering the content in the details element */
+      details > div {
+        display: flex;
+        justify-content: center;
+      }
+
+      /* making all items in the topics list in the same line */
+      .topics ul {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      /* centering the items in the topics list */
+      .topics li {
+        margin: 5px;
+        text-align: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>30DaysOf Challenges</h1>
+      <ul>
+        <li style="background: lightgreen;">
+          30 Days Of Python
+          <details>
+            <summary class="language">Python:</summary>
+            <div class="status">
+              <ul>
+                <li>Python</li>
+                <li>Flask</li>
+                <li>Numpy</li>
+                <li>MangoDB</li>
+                <li>API</li>
+              </ul>
+            </div>
+          </details>
+          Done
+        </li>
+        <li style="background-color: yellow;">
+          30 Days Of JavaScript
+          <details>
+            <summary class="language">JavaScript:</summary>
+            <div class="topics">
+              <ul>
+                <li>JavaScript Fundamentals</li>
+                <li>DOM Manipulation</li>
+                <li>Asynchronous JavaScript</li>
+                <li>ReactJS</li>
+                <li>NodeJS</li>
+              </ul>
+            </div>
+          </details>
+          Ongoing
+        </li>
+        <li style="background-color: #ED2939;">
+          30 Days Of React
+          <details>
+            <summary class="language">React:</summary>
+            <div class="topics">
+              <ul>
+                <li>React Fundamentals</li>
+                <li>Components and Props</li>
+                <li>React Hooks</li>
+                <li>React Router</li>
+                <li>Redux</li>
+              </ul>
+            </div>
+          </details>
+          Coming
+        </li>
+        <li style="background-color: #ED2939;">
+          30 Days Of FullStack
+          <details>
+            <summary class="language">FullStack:</summary>
+            <div class="topics">
+              <ul>
+                <li>HTML and CSS</li>
+                <li>JavaScript Fundamentals</li>
+                <li>NodeJS</li>
+                <li>ExpressJS</li>
+                <li>MongoDB</li>
+              </ul>
+            </div>
+          </details>
+          Coming
+        </li>
+        <li style="background-color: #ED2939;">
+          30 Days Of Data Analysis
+          <details>
+            <summary class="language">Data Analysis:</summary>
+            <div class="topics">
+              <ul>
+                <li>Data Wrangling</li>
+                <li>Data Visualization</li>
+                <li>Machine Learning with Python</li>
+                <li>Deep Learning</li>
+                <li>Big Data</li>
+              </ul>
+            </div>
+          </details>
+          Coming
+        </li>
+        <li style="background-color: #ED2939;">
+          30 Days Of React Native
+          <details>
+            <summary class="language">React Native:</summary>
+            <div class="topics">
+              <ul>
+                <li>React Native Fundamentals</li>
+                <li>Components and Styling</li>
+                <li>React Native Navigation</li>
+                <li>Redux for React Native</li>
+                <li>API Integration</li>
+              </ul>
+            </div>
+          </details>
+          Coming
+        </li>
+
+        <li style="background-color: #ED2939;">
+          30 Days Of Machine Learning
+          <details>
+            <summary class="language">Machine Learning:</summary>
+            <div class="topics">
+              <ul>
+                <li>Introduction to Machine Learning</li>
+                <li>Supervised Learning</li>
+                <li>Unsupervised Learning</li>
+                <li>Reinforcement Learning</li>
+                <li>Deep Learning</li>
+              </ul>
+            </div>
+          </details>
+          Coming
+        </li>
+      </ul>
+      
+    </div>
+  </body>
+</html>

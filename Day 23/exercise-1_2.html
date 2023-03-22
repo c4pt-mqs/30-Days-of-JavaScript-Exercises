@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Keyboard Event Listener</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    p {
+      font-size: 28px;
+      text-align: center;
+      margin: 0 0 20px;
+      border: 3px solid #1e90ff;
+      padding: 15px;
+      box-sizing: border-box;
+      color: #1e90ff;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+
+    #key-pressed {
+      font-weight: bold;
+      color: #ff1493;
+      display: none;
+    }
+
+    #key-code {
+      font-size: 24px;
+      color: #4b0082;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <p>Press a key on the keyboard:</p>
+    <p id="key-pressed"></p>
+    <p id="key-code"></p>
+  </div>
+
+  <script>
+    const keyPressed = document.getElementById('key-pressed');
+    const keyCode = document.getElementById('key-code');
+    document.addEventListener('keydown', function(event) {
+      keyPressed.innerHTML = `Key Pressed: ${event.key}`;
+      keyCode.innerHTML = `Key Code: ${event.keyCode}`;
+      keyPressed.style.display = 'block';
+      keyCode.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

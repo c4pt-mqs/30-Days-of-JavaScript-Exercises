@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solar System: Document Object Model:30 Days Of JavaScript</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url('./images/galaxy.gif');
+        background-size: cover;
+        background-position: center;
+      }
+
+      header {
+        text-align: center;
+        color: white;
+      }
+
+      .flex-container {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px auto;
+        max-width: 600px;
+      }
+
+      .image {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .planet-image {
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        transition: transform 0.5s;
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 10px 0;
+        padding: 0;
+      }
+
+      input,
+      select,
+      button {
+        font-size: 24px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      select {
+        max-width: 200px;
+      }
+
+      button {
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #e67e22;
+      }
+
+      .description {
+        font-size: 24px;
+        margin-top: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #warning {
+        display: none;
+        color: red;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Calculate a weight of an object on a planet</h1>
+      <div class="flex-container">
+        <div class="flex-item description"></div>
+        <div class="flex-item image">
+          <img src='./images/earth.png' class="planet-image" />
+        </div>
+      </div>
+      <input type="number" id="mass" placeholder="Mass in Kilogram" />
+      <select id="planet">
+        <option value='none'>--select planet-- </option>
+        <option value='earth'>Earth</option>
+        <option value='jupiter'>Jupiter</option>
+        <option value='mars'>Mars</option>
+        <option value='mercury'>Mercury</option>
+        <option value='moon'>Moon</option>
+        <option value='neptune'>Neptune</option>
+        <option value='pluto'>Pluto</option>
+        <option value='saturn'>Saturn</option>
+        <option value='uranus'>Uranus</option>
+        <option value='venus'>Venus</option>
+      </select>
+      <button onclick="calculateWeight()">Calculate weight</button>
+      <div id="warning">Please select a planet and the mass</div>
+    </header>
+    <main></main>
+    <script>
+      function calculateWeight() {
+        const mass = parseFloat(document.getElementById('mass').value);
+        const planet = document.getElementById('planet').value;
+        let gravity;
+      
+        if (planet === 'none' || isNaN(mass) ) {
+          document.getElementById('warning').style.display = 'block';
+          return;
+        } else {
+          document.getElementById('warning').style.display = 'none';
+        }
+
+        switch (planet) {
+          case 'earth':
+            gravity = 9.81;
+            break;
+          case 'jupiter':
+            gravity = 24.79;
+            break;
+          case 'mars':
+            gravity = 3.71;
+            break;
+          case 'mercury':
+            gravity = 3.7;
+            break;
+          case 'moon':
+            gravity = 1.62;
+            break;
+          case 'neptune':
+            gravity = 11.15;
+            break;
+          case 'pluto':
+            gravity = 0.62;
+            break;
+          case 'saturn':
+            gravity = 10.44;
+            break;
+          case 'uranus':
+            gravity = 8.87;
+            break;
+          case 'venus':
+            gravity = 8.87;
+            break;
+        }
+      
+        const weight = (mass * gravity).toFixed(2);
+        document.querySelector('.planet-image').src = `./images/${planet}.png`;
+        document.querySelector('.description').innerHTML = `The weight of the object on ${planet} is ${weight} N.`;
+      }
+      
+    </script>
+  </body>
+</html>

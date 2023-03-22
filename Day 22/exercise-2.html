@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Number Generator</title>
+	<style>
+    .country-container {
+      display: flex;
+      flex-wrap: wrap;
+      border: 2px solid black;
+      margin-left: 150px;
+      margin-right: 150px;
+      justify-content: center;
+    }
+    
+    .country {
+
+      border: 2px solid whitesmoke;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      text-align: center;
+    }
+            
+	</style>
+</head>
+<body>
+    <h1 style="text-align: center;">World Countries List</h1><br>
+	  <div class="country-container"></div>
+    
+    <script src="../data/countries.js"></script>
+    <script>
+      const countryContainer = document.querySelector('.country-container');
+      for (let i = 0; i < countries.length; i++) {
+        const countryDiv = document.createElement('div');
+        countryDiv.classList.add('country');
+        countryDiv.textContent = countries[i].toUpperCase();
+        countryContainer.appendChild(countryDiv);
+      }      
+    </script>
+</body>
+</html>

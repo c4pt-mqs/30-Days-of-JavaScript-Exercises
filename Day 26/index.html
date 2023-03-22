@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Countries</title>
+  <style>
+    body {
+      background-color: wheat;
+    }
+
+    .searching {
+      background-image: url("./images/globe-2.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 1px 1px 2px black, 0 0 25px white, 0 0 5px white;
+      filter: brightness(0.8);
+    }
+
+    .searching h1 {
+      font-size: 72px;
+      margin-bottom: 0;
+    }
+
+    .searching h3 {
+      font-size: 36px;
+      margin-top: 0;
+    }
+
+    .searching p {
+      font-size: 24px;
+    }
+
+    .searching input {
+      width: 500px;
+      height: 30px;
+      font-size: 24px;
+      margin-top: 50px;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+    }
+
+    .searching button {
+      background-color: yellowgreen;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .searching button:hover {
+      background-color: rgb(28, 154, 51);
+    }
+
+    .countries-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-left: 50px;
+      margin-right: 50px;
+      margin-top: 50px;
+    }
+
+    .country-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 150px;
+      height: 150px;
+      background-position: center top;
+      background-image: url("images/map_image.jpg");
+      color: black;
+      background-size: cover;
+      border: 1px solid #ddd;
+      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
+      font-size: 18px;
+      filter: brightness(0.9);
+    }
+
+    .div.country-box {
+      color: #ddd;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .button-container button {
+      margin: 0 10px;
+    }
+
+    .starting-word-btn.active,
+    .starting-any-word-btn.active {
+      background-color: rgb(28, 154, 51);
+      color: white;
+    }
+
+    .starting-word-btn.active:hover,
+    .starting-any-word-btn.active:hover {
+      background-color: rgb(20, 114, 38);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="searching">
+    <h1>World Countries List</h1>
+    <h3 id="total-number">Total Number of Countries [total country]</h3>
+    <p id="start-with-text"></p>
+    <div class="button-container">
+      <button class="starting-word-btn">Starting Word</button>
+      <button class="starting-any-word-btn">Starting with Any Word</button>
+      <button class="sorting-btn">&#8593;A-Z</button>
+    </div>
+    <input type="text" name="search" id="search-bar" placeholder="Type a country name to search...">
+  </div>
+  <div class="countries-list"></div>
+  <script src="./data/countries.js"></script>
+  <script>
+    const countriesList = document.querySelector('.countries-list');
+    const searchInput = document.getElementById('search-bar');
+    const startingWordBtn = document.querySelector('.starting-word-btn');
+    const startingAnyWordBtn = document.querySelector('.starting-any-word-btn');
+    const sortingBtn = document.querySelector('.sorting-btn');
+
+    function populateCountriesList(countriesArr) {
+      countriesList.innerHTML = '';
+      countriesArr.forEach(country => {
+        const countryBox = document.createElement('div');
+        countryBox.classList.add('country-box');
+        countryBox.textContent = country;
+        countriesList.appendChild(countryBox);
+      });
+    }
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      let countriesArr = countries.filter(country => {
+        return country.toLowerCase().startsWith(searchTerm);
+      });
+      populateCountriesList(countriesArr);
+      const startWithText = document.querySelector('#start-with-text');
+      if (searchTerm.length > 0) {
+        startWithText.textContent = `Countries start with ${searchTerm} are ${countriesArr.length}`;
+      } else {
+        startWithText.textContent = '';
+      }
+    });
+
+    let isSortedAscending = true;
+    sortingBtn.addEventListener('click', () => {
+      let countriesArr;
+      if (isSortedAscending) {
+        countriesArr = countries.slice().sort();
+        sortingBtn.innerHTML = '&#8595;A-Z';
+      } else {
+        countriesArr = countries.slice().sort().reverse();
+        sortingBtn.innerHTML = '&#8593;A-Z';
+      }
+      isSortedAscending = !isSortedAscending;
+      populateCountriesList(countriesArr);
+    });
+
+    document.getElementById("total-number").innerHTML = "Total Number of Countries: " + countries.length;
+
+
+    // Search according to first letter/word
+    startingWordBtn.addEventListener('click', () => {
+      startingWordBtn.classList.add('active');
+      startingAnyWordBtn.classList.remove('active');
+      searchInput.value = '';
+      populateCountriesList(countries);
+      searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let countriesArr = countries.filter(country => {
+          return country.toLowerCase().startsWith(searchTerm);
+        });
+        populateCountriesList(countriesArr);
+        const startWithText = document.querySelector('#start-with-text');
+        if (searchTerm.length > 0) {
+          startWithText.textContent = `Countries start with "${searchTerm}" are ${countriesArr.length}`;
+        } else {
+          startWithText.textContent = '';
+        }
+      });
+    });
+
+    // Search according to any letter/word
+    startingAnyWordBtn.addEventListener('click', () => {
+      startingAnyWordBtn.classList.add('active');
+      startingWordBtn.classList.remove('active');
+      searchInput.value = '';
+      populateCountriesList(countries);
+      searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let countriesArr = countries.filter(country => {
+          return country.toLowerCase().includes(searchTerm);
+        });
+        populateCountriesList(countriesArr);
+        const startWithText = document.querySelector('#start-with-text');
+        if (searchTerm.length > 0) {
+          startWithText.textContent = `Countries containing "${searchTerm}" are ${countriesArr.length}`;
+        } else {
+          startWithText.textContent = '';
+        }
+      });
+    });
+
+
+  </script>
+</body>
+
+</html>

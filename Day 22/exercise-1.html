@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Number Generator</title>
+	<style>
+		.container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-left: 150px;
+            margin-right: 150px;
+            text-align: center;
+            
+          }
+          
+          .box {
+            width: 90px;
+            height: 50px;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+          }
+          
+          .green {
+            background-color: lightgreen;
+          }
+          
+          .yellow {
+            background-color: yellow;
+          }
+          
+          .red {
+            background-color: #ED2939;
+          }
+          
+	</style>
+</head>
+<body>
+    <h1 style="text-align: center;">Number Generator</h1><br>
+	<div class="container">
+		
+		<script>
+			function isPrime(num) {
+                if (num === 1) {
+                  return false;
+                } else if (num === 2) {
+                  return true;
+                } else {
+                  for (let i = 2; i < num; i++) {
+                    if (num % i === 0) {
+                      return false;
+                    }
+                  }
+                  return true;
+                }
+              }
+              
+              const container = document.querySelector('.container');
+              
+              for (let i = 1; i <= 100; i++) {
+                const box = document.createElement('div');
+                box.classList.add('box');
+                if (i % 2 === 0) {
+                  box.classList.add('green');
+                } else {
+                  box.classList.add('yellow');
+                }
+                if (isPrime(i)) {
+                  box.classList.remove('green', 'yellow');
+                  box.classList.add('red');
+                }
+                box.textContent = i;
+                container.appendChild(box);
+              }
+              
+		</script>
+	</div>
+</body>
+</html>

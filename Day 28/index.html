@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+          }
+          
+          h2 {
+            margin-top: 80px;
+            text-align: center;
+            color: #333;
+          }
+          
+          .container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto;
+            width: 80%;
+          }
+          
+          .input-container {
+            display: flex;
+            justify-content: center;
+            color: #dc3545;
+            display: none;
+          }
+          
+          input {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 1rem;
+            font-size: 16px;
+            color: #333;
+          }
+          
+          input:required {
+            border-color: #dc3545;
+          }
+          
+          .add-player {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            width: 50%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+          }
+          
+          button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-left: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+          }
+          
+          button:hover {
+            background-color: #45a049;
+          }
+          
+          table {
+            border-collapse: collapse;
+            margin: 2rem auto;
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+          }
+          
+          th,
+          td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+          }
+          
+          th {
+            background-color: #4CAF50;
+            color: white;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #f2f2f2;
+          }          
+  </style>
+  </head>
+  <body>
+    <h2>30 Days of JavaScript Challenge Leaderboard</h2>
+    <div>
+      <div class="container">
+        <input type="text" placeholder="First Name" id="fname" required>
+        <input type="text" placeholder="Last Name" id="lname" required>
+        <input type="text" placeholder="Country" id="country" required>
+        <input type="number" placeholder="Player Score" id="score" required max="100">
+        <button class="add-player" onclick="addPlayer()">Add Player</button>
+      </div>
+      <div id="warn-message" class="input-container"> Please fill in all fields. </div>
+    </div>
+    <table id="leaderboard">
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Country</th>
+              <th>Score</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John Martine</td>
+              <td>USA</td>
+              <td>90</td>
+              <td>
+                <button class="add-button" onclick="addToScore(this)">+5</button>
+                <button class="subtract-button" onclick="subtractFromScore(this)">-5</button>
+                <button class="remove-button" onclick="removePlayer(this)">Remove</button>
+              </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Alex Arcin</td>
+                <td>French</td>
+                <td>83</td>
+                <td>
+                  <button class="add-button" onclick="addToScore(this)">+5</button>
+                  <button class="subtract-button" onclick="subtractFromScore(this)">-5</button>
+                  <button class="remove-button" onclick="removePlayer(this)">Remove</button>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Benyamin Frank</td>
+                <td>Germany</td>
+                <td>57</td>
+                <td>
+                  <button class="add-button" onclick="addToScore(this)">+5</button>
+                  <button class="subtract-button" onclick="subtractFromScore(this)">-5</button>
+                  <button class="remove-button" onclick="removePlayer(this)">Remove</button>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Charley Ericsson</td>
+                <td>Italy</td>
+                <td>64</td>
+                <td>
+                  <button class="add-button" onclick="addToScore(this)">+5</button>
+                  <button class="subtract-button" onclick="subtractFromScore(this)">-5</button>
+                  <button class="remove-button" onclick="removePlayer(this)">Remove</button>
+                </td>
+              </tr>
+          </tbody>
+    </table>
+    <script>
+        const fname = document.querySelector("#fname");
+        const lname = document.querySelector("#lname");
+        const country = document.querySelector("#country");
+        const score = document.querySelector("#score");
+        const warnMessage = document.querySelector("#warn-message");
+        const leaderboard = document.querySelector("#leaderboard tbody");
+        
+        function addPlayer() {
+            if (fname.value === "" || lname.value === "" || country.value === "" || score.value === "") {
+              warnMessage.style.display = "block";
+            } else {
+              warnMessage.style.display = "none";
+              const parsedScore = parseInt(score.value);
+              if (isNaN(parsedScore) || parsedScore < 0 || parsedScore > 100) {
+                alert("Score must be a number between 0 and 100");
+                return;
+              }
+              const row = `
+                <tr>
+                  <td></td>
+                  <td>${fname.value} ${lname.value}</td>
+                  <td>${country.value}</td>
+                  <td>${score.value}</td>
+                  <td>
+                    <button class="add-button" onclick="addToScore(this)">+5</button>
+                    <button class="subtract-button" onclick="subtractFromScore(this)">-5</button>
+                    <button class="remove-button" onclick="removePlayer(this)">Remove</button>
+                  </td>
+                </tr>
+              `;
+              leaderboard.insertAdjacentHTML("beforeend", row);
+            }
+          }
+          
+        
+          function addToScore(button) {
+            const currentScore = parseInt(button.parentNode.previousElementSibling.textContent);
+            const newScore = currentScore + 5;
+            if (newScore <= 100) {
+              button.parentNode.previousElementSibling.textContent = newScore;
+            }
+          }
+          
+          function subtractFromScore(button) {
+            const currentScore = parseInt(button.parentNode.previousElementSibling.textContent);
+            const newScore = currentScore - 5;
+            if (newScore >= 0) {
+              button.parentNode.previousElementSibling.textContent = newScore;
+            }
+          }
+          
+        
+        function removePlayer(button) {
+          button.closest("tr").remove();
+        }
+        
+    </script>
+  </body>
+</html>
